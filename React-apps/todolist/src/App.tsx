@@ -9,7 +9,7 @@ function App() {
   return (
     <>
 
-      <h1>Vite + React</h1>
+      <h1>TODOLIST</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 10)}>
           count is {count}
