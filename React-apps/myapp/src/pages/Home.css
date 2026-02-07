@@ -130,6 +130,16 @@
   line-height: 1.6;
 }
 
+/* Carousel Section */
+.carousel-section {
+  padding: 0.5rem 1rem 3rem;
+  margin-bottom: 3rem;
+}
+
+.carousel-section .section-title {
+  margin-bottom: 2rem;
+}
+
 /* CTA Section */
 .cta {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
