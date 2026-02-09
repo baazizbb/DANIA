@@ -4,7 +4,12 @@ import "./App.css";
 
 function App() {
   return (
+
+
+    
     <MainLayout>
+
+
       <Home />
     </MainLayout>
   );

@@ -4,34 +4,30 @@ import "./Home.css";
 export default function Home() {
   // Array of images with different sizes and aspect ratios for testing
   const carouselImages = [
+    "http://185.185.80.116/images/baner/baner-03.webp",
+    // "http://185.185.80.116/images/product/img9.png",
+    // "http://185.185.80.116/images/product/img8.png",
+    "http://185.185.80.116/images/baner/baner-01.webp",
+    "http://185.185.80.116/images/baner/baner-02.webp",
+    "http://185.185.80.116/images/baner/baner-09.jpg",
+    "http://185.185.80.116/images/baner/baner-08.webp",
+    "http://185.185.80.116/images/baner/baner-05.webp",
+    "http://185.185.80.116/images/baner/baner-07.webp",
+    "http://185.185.80.116/images/baner/baner-06.webp",
+    "http://185.185.80.116/images/baner/baner-04.webp",
 
-    "http://185.185.80.116/images/product/img16.png",
-
-    "http://185.185.80.116/images/product/img9.png",
- 
-    "http://185.185.80.116/images/product/img8.png",
-
-    "http://185.185.80.116/images/product/img24.png",
-
-    "http://185.185.80.116/images/product/img35.png",
-
-    "http://185.185.80.116/images/product/img36.png",
- 
-    "http://185.185.80.116/images/product/img28.png",
-
-    "http://185.185.80.116/images/product/img30.png",
-
-    "http://185.185.80.116/images/product/img32.png",
+    // "http://185.185.80.116/images/product/img28.png",
+    // "http://185.185.80.116/images/product/img30.png",
+    // "http://185.185.80.116/images/product/img32.png",
   ];
 
   return (
     <div className="home">
       {/* Carousel Section */}
       <section className="carousel-section">
-    
         <Carousel
           images={carouselImages}
-          autoplay={true}
+          autoplay={false}
           autoplayDelay={5000}
           effect="slide"
           loop={false}
