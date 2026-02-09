@@ -1,20 +1,24 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import logoPng from "../assets/logo.png";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const isActive = (path: string) =>
+    location.pathname === path ? "nav-link active" : "nav-link";
 
   return (
     <header className="header">
       <div className="header-container">
         <div className="logo">
           <img src={logoPng} alt="MyApp Logo" className="logo-icon" />
-          {/* <span className="logo-text">MyApp</span> */}
         </div>
 
         <button
@@ -30,19 +34,14 @@ export default function Header() {
         <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
           <ul className="nav-list">
             <li className="nav-item">
-              <a href="#home" className="nav-link active">
+              <Link to="/" className={isActive("/")}>
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a href="#about" className="nav-link">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#contact" className="nav-link">
+              <Link to="/contact" className={isActive("/contact")}>
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

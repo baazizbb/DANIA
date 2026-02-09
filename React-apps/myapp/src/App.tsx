@@ -1,17 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
+import Contact from "./pages/Contact";
 import "./App.css";
 
 function App() {
   return (
-
-
-    
-    <MainLayout>
-
-
-      <Home />
-    </MainLayout>
+    <Router>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </MainLayout>
+    </Router>
   );
 }
 
