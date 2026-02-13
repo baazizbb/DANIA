@@ -4,7 +4,7 @@ import "./Home.css";
 export default function Home() {
   // Array of images with different sizes and aspect ratios for testing
   const carouselImages = [
-    "http://185.185.80.116/images/baner/baner-03.webp",
+    "http://185.185.80.116/images/baner/baner-12.webp",
     // "http://185.185.80.116/images/product/img9.png",
     // "http://185.185.80.116/images/product/img8.png",
     "http://185.185.80.116/images/baner/baner-01.webp",
