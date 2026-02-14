@@ -1,0 +1,70 @@
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.about-hero {
+  text-align: center;
+  padding: 44px 20px;
+  margin-bottom: 30px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef6ff 0%, #e4ecff 100%);
+}
+
+.about-hero h1 {
+  margin: 0 0 12px;
+  font-size: 2.5rem;
+  color: #1f2a44;
+}
+
+.about-hero p {
+  margin: 0 auto;
+  max-width: 720px;
+  color: #4f5d75;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-card {
+  background: #fff;
+  border: 1px solid #e7edf7;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 4px 18px rgba(31, 42, 68, 0.06);
+}
+
+.about-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  color: #1f2a44;
+}
+
+.about-card p {
+  margin: 0;
+  color: #5a6478;
+  line-height: 1.6;
+}
+
+.about-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #5a6478;
+  line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+}

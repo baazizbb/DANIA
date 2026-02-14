@@ -25,11 +25,11 @@ export default function Carousel({
     <div className="carousel-container">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        spaceBetween={30}
-        slidesPerView={"auto"}
-        centeredSlides={true}
+        spaceBetween={16}
+        slidesPerView={1}
+        centeredSlides={false}
         navigation
-        pagination={{ clickable: true }}
+        pagination={{ clickable: true, dynamicBullets: true }}
         autoplay={
           autoplay
             ? {
@@ -38,8 +38,14 @@ export default function Carousel({
               }
             : false
         }
+        breakpoints={{
+          0: { spaceBetween: 8 },
+          768: { spaceBetween: 12 },
+          1024: { spaceBetween: 16 },
+        }}
         effect={effect}
         loop={loop}
+        resistanceRatio={0.85}
         className="mySwiper"
       >
         {images.map((image, index) => (

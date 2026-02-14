@@ -11,10 +11,11 @@
 .header-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   height: 70px;
 }
 
@@ -28,7 +29,7 @@
 }
 
 .logo-icon {
-  width: 200px;
+  width: clamp(140px, 18vw, 200px);
   height: 40px;
   object-fit: contain;
 }
@@ -44,14 +45,16 @@
 .nav {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-list {
   display: flex;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 2rem;
+  gap: 0.5rem;
 }
 
 .nav-item {
@@ -62,17 +65,26 @@
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
   position: relative;
+  line-height: 1;
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
   background-color: white;
@@ -82,11 +94,128 @@
 .nav-link:hover,
 .nav-link.active {
   color: white;
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: 0.5rem;
+}
+
+.action-menu-wrap {
+  position: relative;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.icon-button:hover,
+.icon-button.open {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.icon-button:active {
+  transform: scale(0.96);
+}
+
+.icon-svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.icon-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ff6b6b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #6b63b8;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.25);
+  padding: 12px;
+  z-index: 1010;
+}
+
+.menu-title {
+  margin: 0 0 6px;
+  color: #1f2a44;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.menu-text {
+  margin: 0 0 10px;
+  color: #5f6780;
+  font-size: 0.9rem;
+}
+
+.menu-button {
+  width: 100%;
+  border: 1px solid #e7edf7;
+  background: #f9fbff;
+  color: #1f2a44;
+  border-radius: 8px;
+  min-height: 38px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-button:hover {
+  background: #edf3ff;
+}
+
+.menu-button.primary {
+  background: #5872f5;
+  color: #fff;
+  border-color: #5872f5;
+}
+
+.menu-button.primary:hover {
+  background: #425ee5;
 }
 
 /* Hamburger Menu Styles */
@@ -128,6 +257,7 @@
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
+    margin-left: 0.35rem;
   }
 
   .nav {
@@ -137,12 +267,13 @@
     width: 70%;
     max-width: 300px;
     height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ff9800 0%, #ff6a00 100%);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transition: right 0.3s ease;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    margin-left: 0;
   }
 
   .nav-open {
@@ -152,11 +283,30 @@
   .nav-list {
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
+    width: 100%;
+    padding: 0 1rem;
   }
 
   .nav-link {
     font-size: 1.2rem;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .header-actions {
+    margin-left: auto;
+    gap: 0.4rem;
+  }
+
+  .icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dropdown-menu {
+    right: -40px;
+    width: min(220px, 85vw);
   }
 }
 
