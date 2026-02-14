@@ -111,7 +111,9 @@ export default function TopBar() {
           </a>
         </div> */}
 
-        <div className="text-topbar"><h3>توصيل مجاني بمناسبة شهر رمضان        💖</h3></div>
+        <div className="text-topbar">
+          <h3>توصيل مجاني بمناسبة شهر رمضان 💖</h3>
+        </div>
       </div>
     </div>
   );
