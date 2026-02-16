@@ -5,6 +5,13 @@ import {
   type SetStateAction,
   type SyntheticEvent,
 } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faCartShopping,
+  faGrip,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import ProductFilters from "../components/ProductFilters";
 import "./Products.css";
 
@@ -23,6 +30,7 @@ type ProductColor = "Black" | "White" | "Brown" | "Gray" | "Blue";
 type PriceRange = "all" | "0-149" | "150-299" | "300-449" | "450+";
 type ProductBadge = "SALE" | "NEW" | "HOT";
 type SortOption = "default" | "price-asc" | "price-desc" | "name-asc";
+type ViewMode = "grid" | "list";
 
 interface Product {
   sku: string;
@@ -211,6 +219,7 @@ export default function Products() {
   const [searchText, setSearchText] = useState("");
   const [addedIds, setAddedIds] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>("default");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [showLimit, setShowLimit] = useState<number>(6);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState<ProductCategory[]>([]);
@@ -354,69 +363,6 @@ export default function Products() {
 
   return (
     <div className="products-page">
-      <section className="products-toolbar">
-        <div className="toolbar-left">
-          <div className="view-switches" aria-label="View options">
-            <button type="button" className="view-btn active">
-              []
-            </button>
-            <button type="button" className="view-btn">
-              II
-            </button>
-            <button type="button" className="view-btn">
-              =
-            </button>
-          </div>
-
-          <p className="results-copy">
-            Showing {start}-{end} of {sortedProducts.length} products
-          </p>
-        </div>
-
-        <div className="toolbar-right">
-          <input
-            type="text"
-            placeholder="Search by name or ID"
-            value={searchText}
-            onChange={(event) => {
-              setSearchText(event.target.value);
-              setCurrentPage(1);
-            }}
-            className="products-search"
-          />
-
-          <label className="toolbar-select-wrap">
-            <span>Sort:</span>
-            <select
-              value={sortBy}
-              onChange={(event) => setSortBy(event.target.value as SortOption)}
-              className="toolbar-select"
-            >
-              <option value="default">Default</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A to Z</option>
-            </select>
-          </label>
-
-          <label className="toolbar-select-wrap">
-            <span>Per page:</span>
-            <select
-              value={showLimit}
-              onChange={(event) => {
-                setShowLimit(Number(event.target.value));
-                setCurrentPage(1);
-              }}
-              className="toolbar-select toolbar-select-small"
-            >
-              <option value={6}>6</option>
-              <option value={9}>9</option>
-              <option value={12}>12</option>
-            </select>
-          </label>
-        </div>
-      </section>
-
       <section className="products-content">
         <ProductFilters
           categories={categories}
@@ -449,73 +395,226 @@ export default function Products() {
         />
 
         <div className="products-main">
+          <section className="products-toolbar">
+            <div className="toolbar-left">
+              <div className="view-switches" aria-label="View options">
+                <button
+                  type="button"
+                  className={`view-btn ${viewMode === "grid" ? "active" : ""}`}
+                  aria-label="Grid view"
+                  aria-pressed={viewMode === "grid"}
+                  onClick={() => setViewMode("grid")}
+                >
+                  <FontAwesomeIcon icon={faGrip} />
+                </button>
+                <button
+                  type="button"
+                  className={`view-btn ${viewMode === "list" ? "active" : ""}`}
+                  aria-label="List view"
+                  aria-pressed={viewMode === "list"}
+                  onClick={() => setViewMode("list")}
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </button>
+              </div>
+
+              <p className="results-copy">
+                Showing {start}-{end} of {sortedProducts.length} products
+              </p>
+            </div>
+
+            <div className="toolbar-right">
+              <input
+                type="text"
+                placeholder="Search by name or ID"
+                value={searchText}
+                onChange={(event) => {
+                  setSearchText(event.target.value);
+                  setCurrentPage(1);
+                }}
+                className="products-search"
+              />
+
+              <label className="toolbar-select-wrap">
+                <span>Sort:</span>
+                <select
+                  value={sortBy}
+                  onChange={(event) => setSortBy(event.target.value as SortOption)}
+                  className="toolbar-select"
+                >
+                  <option value="default">Default</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="name-asc">Name: A to Z</option>
+                </select>
+              </label>
+
+              <label className="toolbar-select-wrap">
+                <span>Per page:</span>
+                <select
+                  value={showLimit}
+                  onChange={(event) => {
+                    setShowLimit(Number(event.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="toolbar-select toolbar-select-small"
+                >
+                  <option value={6}>6</option>
+                  <option value={9}>9</option>
+                  <option value={12}>12</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
           <section className="products-grid-section">
             {sortedProducts.length === 0 ? (
               <p className="empty-state">No products match this filter.</p>
             ) : (
-              <div className="products-grid">
-                {displayedProducts.map((product) => {
-                  const isAdded = addedIds.includes(product.sku);
+              <>
+                {viewMode === "list" ? (
+                  <div className="products-list-head" aria-hidden="true">
+                    <span>Image</span>
+                    <span>SKU</span>
+                    <span>Product</span>
+                    <span>Rating</span>
+                    <span>Price</span>
+                    <span />
+                  </div>
+                ) : null}
 
-                  return (
-                    <article key={product.sku} className="product-card">
-                      <div className="product-image-wrap">
-                        <button type="button" className="quickview-btn" aria-label="Quick view">
-                          []
-                        </button>
-                        <div className="product-badges">
-                          {product.badges?.map((badge) => (
-                            <span
-                              key={`${product.sku}-${badge}`}
-                              className={`product-badge ${badge.toLowerCase()}`}
-                            >
-                              {badge}
+                <div className={`products-grid ${viewMode === "list" ? "list-view" : ""}`}>
+                  {displayedProducts.map((product) => {
+                    const isAdded = addedIds.includes(product.sku);
+
+                    if (viewMode === "list") {
+                      return (
+                        <article key={product.sku} className="product-card product-card-list">
+                          <div className="list-cell list-cell-image">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="product-image"
+                              loading="lazy"
+                              onError={handleImageError}
+                            />
+                          </div>
+
+                          <p className="list-cell list-cell-sku">{product.sku}</p>
+
+                          <div className="list-cell list-cell-product">
+                            <div className="product-badges-inline">
+                              {product.badges?.map((badge) => (
+                                <span
+                                  key={`${product.sku}-${badge}`}
+                                  className={`product-badge-inline ${badge.toLowerCase()}`}
+                                >
+                                  {badge}
+                                </span>
+                              ))}
+                            </div>
+                            <h3 className="product-name">{product.name}</h3>
+                          </div>
+
+                          <div
+                            className="list-cell list-cell-rating"
+                            aria-label={`${product.rating} out of 5 stars`}
+                          >
+                            <div className="product-stars">
+                              {Array.from({ length: 5 }, (_, index) => (
+                                <FontAwesomeIcon
+                                  key={`${product.sku}-star-${index}`}
+                                  icon={faStar}
+                                  className={index < product.rating ? "is-filled" : "is-empty"}
+                                />
+                              ))}
+                            </div>
+                            <span className="product-reviews">{product.reviews} reviews</span>
+                          </div>
+
+                          <div className="list-cell list-cell-price">
+                            <span className="price-current">${product.price.toFixed(2)}</span>
+                            {product.oldPrice ? (
+                              <span className="price-old">${product.oldPrice.toFixed(2)}</span>
+                            ) : null}
+                          </div>
+
+                          <button
+                            type="button"
+                            className={`add-cart-btn list-cell list-cell-cart ${isAdded ? "added" : ""}`}
+                            onClick={() => handleAddToCart(product.sku)}
+                            aria-label={isAdded ? "Remove from cart" : "Add to cart"}
+                          >
+                            <FontAwesomeIcon icon={faCartShopping} />
+                          </button>
+                        </article>
+                      );
+                    }
+
+                    return (
+                      <article key={product.sku} className="product-card">
+                        <div className="product-image-wrap">
+                          <button type="button" className="quickview-btn" aria-label="Quick view">
+                            []
+                          </button>
+                          <div className="product-badges">
+                            {product.badges?.map((badge) => (
+                              <span
+                                key={`${product.sku}-${badge}`}
+                                className={`product-badge ${badge.toLowerCase()}`}
+                              >
+                                {badge}
+                              </span>
+                            ))}
+                          </div>
+
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="product-image"
+                            loading="lazy"
+                            onError={handleImageError}
+                          />
+                        </div>
+
+                        <div className="product-info">
+                          <p className="product-id">SKU: {product.sku}</p>
+                          <h3 className="product-name">{product.name}</h3>
+
+                          <p className="product-rating" aria-label={`${product.rating} out of 5 stars`}>
+                            <span className="product-stars">
+                              {Array.from({ length: 5 }, (_, index) => (
+                                <FontAwesomeIcon
+                                  key={`${product.sku}-grid-star-${index}`}
+                                  icon={faStar}
+                                  className={index < product.rating ? "is-filled" : "is-empty"}
+                                />
+                              ))}
                             </span>
-                          ))}
+                            <span className="product-reviews">{product.reviews} reviews</span>
+                          </p>
+
+                          <div className="product-prices">
+                            <span className="price-current">${product.price.toFixed(2)}</span>
+                            {product.oldPrice ? (
+                              <span className="price-old">${product.oldPrice.toFixed(2)}</span>
+                            ) : null}
+                          </div>
+
+                          <button
+                            type="button"
+                            className={`add-cart-btn ${isAdded ? "added" : ""}`}
+                            onClick={() => handleAddToCart(product.sku)}
+                            aria-label={isAdded ? "Remove from cart" : "Add to cart"}
+                          >
+                            <FontAwesomeIcon icon={faCartShopping} />
+                          </button>
                         </div>
-
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="product-image"
-                          loading="lazy"
-                          onError={handleImageError}
-                        />
-                      </div>
-
-                      <div className="product-info">
-                        <p className="product-id">SKU: {product.sku}</p>
-                        <h3 className="product-name">{product.name}</h3>
-
-                        <p
-                          className="product-rating"
-                          aria-label={`${product.rating} out of 5 stars`}
-                        >
-                          {"*".repeat(product.rating)}
-                          {".".repeat(5 - product.rating)}
-                          <span>{product.reviews} reviews</span>
-                        </p>
-
-                        <div className="product-prices">
-                          <span className="price-current">${product.price.toFixed(2)}</span>
-                          {product.oldPrice ? (
-                            <span className="price-old">${product.oldPrice.toFixed(2)}</span>
-                          ) : null}
-                        </div>
-
-                        <button
-                          type="button"
-                          className={`add-cart-btn ${isAdded ? "added" : ""}`}
-                          onClick={() => handleAddToCart(product.sku)}
-                          aria-label={isAdded ? "Remove from cart" : "Add to cart"}
-                        >
-                          Cart
-                        </button>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </>
             )}
           </section>
 

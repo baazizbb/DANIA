@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import "./Breadcrumb.css";
 
 const labelMap: Record<string, string> = {
@@ -30,6 +32,7 @@ export default function Breadcrumb() {
           ) : (
               
             <Link to="/" className="breadcrumb-link">
+              <FontAwesomeIcon icon={faHouse} className="breadcrumb-home-icon" aria-hidden="true" />
               Home
             </Link>
           )}
