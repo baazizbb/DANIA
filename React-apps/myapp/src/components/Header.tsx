@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../auth/AuthContext";
 import "./Header.css";
 import logoPng from "../assets/logo.png";
 
@@ -11,6 +12,8 @@ export default function Header() {
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,6 +48,12 @@ export default function Header() {
 
   const isActive = (path: string) =>
     location.pathname === path ? "nav-link active" : "nav-link";
+
+  const handleLogout = () => {
+    logout();
+    setIsAvatarOpen(false);
+    navigate("/login");
+  };
 
   return (
     <header className="header">
@@ -129,18 +138,30 @@ export default function Header() {
             {isAvatarOpen && (
               <div id="avatar-menu" className="dropdown-menu">
                 <h4 className="menu-title">My Account</h4>
-                <button type="button" className="menu-button">
-                  Profile
-                </button>
-                <button type="button" className="menu-button">
-                  Orders
-                </button>
-                <button type="button" className="menu-button">
-                  Settings
-                </button>
-                <button type="button" className="menu-button">
-                  Logout
-                </button>
+                {isAuthenticated ? (
+                  <>
+                    <button type="button" className="menu-button">
+                      Profile
+                    </button>
+                    <button type="button" className="menu-button">
+                      Orders
+                    </button>
+                    <button type="button" className="menu-button">
+                      Settings
+                    </button>
+                    <button type="button" className="menu-button" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="menu-button menu-link-button"
+                    onClick={() => setIsAvatarOpen(false)}
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             )}
           </div>
