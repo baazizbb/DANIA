@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
+import Contact2 from "./pages/Contact2";
 import About from "./pages/About";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
@@ -28,6 +29,7 @@ function App() {
             />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/contact2" element={<Contact2 />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

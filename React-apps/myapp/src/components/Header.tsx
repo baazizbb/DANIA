@@ -94,6 +94,11 @@ export default function Header() {
                 Contact
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/contact2" className={isActive("/contact2")}>
+                Contact 2
+              </Link>
+            </li>
           </ul>
         </nav>
 

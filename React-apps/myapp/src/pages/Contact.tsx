@@ -124,6 +124,21 @@ function Contact() {
           </form>
         </div>
       </div>
+      <div className="map-card map-card--full">
+        <div className="map-header">
+          <span className="map-title">Find Us</span>
+          <span className="map-subtitle">Midtown, New York</span>
+        </div>
+        <div className="map-embed">
+          <iframe
+            title="Map"
+            src="https://www.google.com/maps?q=123+Business+Street+New+York+NY+10001&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+      </div>
     </div>
   );
 }
